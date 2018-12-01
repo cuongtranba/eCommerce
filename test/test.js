@@ -36,5 +36,15 @@ describe('shopping cart testing', () => {
       assert.equal(user.cart.products.length, 2)
     })
 
+    it('should get total from user\'cart without promotion', () => {
+      const cart = new Cart();
+      const user = new User('John Doe 1', Group.GOLD, 'john.doe@example.com', cart);
+      const iphone = new Product('Iphone', 'Sliver', 999);
+      const book = new Product('Saigon', 'blue', 200);
+      user.cart = cart;
+      user.addProduct(iphone, 5)
+      user.addProduct(book, 5)
+      assert.equal(user.cart.getTotalPrice(), 5995) // 999 * 5 + 200 * 5
+    })
   });
 });
