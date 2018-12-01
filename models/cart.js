@@ -4,17 +4,16 @@ class Cart {
     this.user = null;
   }
 
-  getTotalPrice(promotions) {
+  getTotalPrice(promotion) {
     const total = this.products.reduce((acc, cur) => {
       return acc + cur.price
     }, 0);
-    return total;
-  }
 
-  isPromotionValid(promotion) {
-    
+    if (promotion == null) {
+      return total;
+    }
+    return total - promotion.getDiscount(this.user);
   }
-
 }
 
 module.exports = Cart
