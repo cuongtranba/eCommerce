@@ -1,0 +1,6 @@
+module.exports = {
+  UNREGISTER: 'UNREGISTER',
+  REGISTER: 'UNREGISTER',
+  SLIVER: 'SLIVER',
+  GOLD: 'GOLD'
+}
