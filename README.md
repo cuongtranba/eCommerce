@@ -31,3 +31,4 @@ $ npm run test
     **promotion testing**
       ✓ should get right total from user'cart without promotion
       ✓ should get right total from user'cart with promotion
+      ✓ should get right total from user'cart with promotion match conditions

@@ -63,7 +63,7 @@ describe('shopping cart testing', () => {
     it('should valid when match color and subtotal', () => {
       const promotion = new Promotion(new Date(2019, 12, 20), new Date(2018, 12, 2), Group.REGISTER, 10, 'Blue', 100)
       const validColorAndSubtotal = rules.find(c => c.name == 'validColorAndSubtotal');
-      
+
       const cart = new Cart();
       const fakeUser = new User('cuong', Group.REGISTER);
       fakeUser.cart = cart;
@@ -92,7 +92,7 @@ describe('shopping cart testing', () => {
       assert.equal(user.cart.getTotalPrice(), 2897) // 999 * 2 + 899 = 2897
     })
 
-    it('should get right total from user\'cart with promotion', () => {
+    it('should get right total from user\'cart with promotion not match conditions', () => {
       const cart = new Cart();
       const user = new User('John Doe 1', Group.GOLD, 'john.doe@example.com');
 
@@ -107,7 +107,25 @@ describe('shopping cart testing', () => {
 
       const promotion = new Promotion(new Date(2018, 11, 20), new Date(2018, 12, 20), Group.GOLD, 50, 'Black',
         1500)
-      assert.equal(user.cart.getTotalPrice(promotion), 2847) // 999 * 2 + 899 = 2897 - 50(discount) = 2847
+      assert.equal(user.cart.getTotalPrice(promotion), 2897) // 999 * 2 + 1501 = 2897
+    })
+
+    it('should get right total from user\'cart with promotion match conditions', () => {
+      const cart = new Cart();
+      const user = new User('John Doe 1', Group.GOLD, 'john.doe@example.com');
+
+      const iphoneSliver = new Product('Iphone', 'Sliver', 999);
+      const iphoneBlack = new Product('Iphone', 'Black', 1899);
+
+      user.cart = cart;
+      cart.user = user;
+
+      user.addProduct(iphoneSliver, 2)
+      user.addProduct(iphoneBlack, 1)
+
+      const promotion = new Promotion(new Date(2018, 11, 1), new Date(2018, 11, 20), Group.GOLD, 50, 'Black',
+        1500)
+      assert.equal(user.cart.getTotalPrice(promotion), 3847) // 999 * 2 + 1899 = 3897 - 50(discount) = 3847
     })
   })
 });

@@ -14,6 +14,10 @@ class Cart {
     }
     return total - promotion.getDiscount(this.user);
   }
+
+  getDiscount(promotion) {
+    return promotion.getDiscount(this.user);
+  }
 }
 
 module.exports = Cart
