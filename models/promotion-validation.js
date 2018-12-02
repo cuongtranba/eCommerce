@@ -29,6 +29,9 @@ const validColorAndSubtotal = ({
   const totalPriceByColor = user.cart.products
     .filter(c => c.color == promotion.color)
     .reduce((acc, cur) => acc + cur.price, 0)
+  if (totalPriceByColor == 0) { //not found product match color
+    return false;
+  }
   if (totalPriceByColor > promotion.subtotal) {
     return true;
   }
@@ -57,11 +60,11 @@ const rules = [
  * @param {Object} data data for validation method
  */
 const excuteRules = (rules, data) => {
-  rules.forEach(rule => {
+  for (const rule of rules) {
     if (!rule(data)) {
-      return false
+      return false;
     }
-  });
+  }
   return true;
 }
 
